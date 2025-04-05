@@ -36,9 +36,56 @@ def validate_maze(maze: Maze)-> bool:
     # if maze.row<5 or maze.rows>100: raise error
     # Check each row length equals maze.col
     return True
-def move_player(maze: maze, direction:str) -> bool:
+def move_player(maze: Maze, direction:str) -> bool:
+  """Handle player movement
+  Movement rules:
+  - Compute new position based on WASD
+  - Check wall collision or out of bound moves
+  - Update player position
+  - Trigger game over if E is reached
   """
+  #Examplles:
+  #new_row = maze.player[0] + (direction=='w' ? -1 : 1)
+  #Check if maze.grid[new_row][new_row]is#
+  # Ensure 0 <= row < rows
+  return True #Return whether the move is successful
+
+def display_map(maze: Maze):
   """
+  Display the map player position
+  Display rules:
+  - Show X at player's current location
+  - Keep original S and E characters
+  """
+  # Implementation:
+  # Loop over maze.grid, show X at maze.player
+  # Show original characters otherwise
+
+  print("Map displays successfully")
+
+
+
+
+def handle_input(maze: Maze, command:str)-> bool:
+  """Handle user input
+  Input rules:
+  - Case-insensitive command handling
+  - Handle move/map/quit commands
+  - Show message on invalid moves
+  """
+  cmd = command.lower()
+  if cmd == 'q':
+    return False
+  elif cmd == 'm':
+    display_map(maze)
+  elif cmd in ('W','A','S','D'):
+    if not move_player(maze,cmd):
+      print("Invalid move")
+  else:
+    print("invalid command")
+  return True
+
+
 def main():
   if len(sys.argv) != 2:
     print('Usage:python maze.py <maze_file>')
@@ -51,8 +98,18 @@ def main():
     print("Game start! Use WASD to move, M to view map, Q to quit")
     while True:
       cmd = input(">").strip()
-      if not 
-
+      if not handle_input(maze,cmd):
+        print("Game exited")
+        break
+      if maze.player == maze.exit:
+        print("Congratulations! You escapsed the maze!") 
+        display_map(maze)
+        break
 
   except Exception as e:
-    print()
+    print(f"Error: {e}")
+    sys.exit(1)
+
+
+if __name__ == "__main__":
+  main()
