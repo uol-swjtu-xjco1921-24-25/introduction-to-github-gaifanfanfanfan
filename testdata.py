@@ -62,12 +62,12 @@ def test_oversized_maze():
   run_test(maze,expected_errors=["excceds maximum size "])
 
 def test_invalid_start_position():
-  """"""
+  """Test invalid starting position"""
   maze = os.path.join(TEST_MAZE_DIR,"4.txt")
   run_test(maze,expected_errors=["Invalid start position"])
 
 def test_command_length_mismatch():
-  """"""
+  """Test command length exceeding required path length"""
   maze = os.path.join(TEST_MAZE_DIR,"6.txt")
   result = run_test(
     maze,
@@ -78,18 +78,18 @@ def test_command_length_mismatch():
 
 
 def test_multiple_start_position():
-  """"""
+  """Test handing of multiple entry points"""
   maze = os.path.join(TEST_INPUT_DIR,"77.txt")
   run_test(maze , excepted_output=["Using first start position"])
   assert "E" in result.stdout
 
 def test_uneven_maze_rows():
-  """"""
+  """test maze with inconsistent row lengths"""
   maze = os.path.join(TEST_MAZE_DIR, "6666.txt")
   run_test(maze,excepted_errors=["Invalid row length"])
 
 def test_position_update():
-  """"""
+  """Test correntness of position updates"""
   maze = os.path.join(TEST_MAZE_DIR, "9.txt")
   result = run_test(
     maze,
@@ -98,7 +98,7 @@ def test_position_update():
   assert "E" not in result.stdout.replace("Congratulations","")
 
 def test_input_pocessing():
-  """"""
+  """Test input processing"""
   maze = os.path.join(TEST_MAZE_DIR , "7777.txt")
   result = run_test(
     maze,
