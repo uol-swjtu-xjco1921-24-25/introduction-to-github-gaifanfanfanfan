@@ -61,6 +61,59 @@ def test_oversized_maze():
   maze = os.path.join(TEST_MAZE_DIR,"4.txt")
   run_test(maze,expected_errors=["excceds maximum size "])
 
+def test_invalid_start_position():
+  """"""
+  maze = os.path.join(TEST_MAZE_DIR,"4.txt")
+  run_test(maze,expected_errors=["Invalid start position"])
+
+def test_command_length_mismatch():
+  """"""
+  maze = os.path.join(TEST_MAZE_DIR,"6.txt")
+  result = run_test(
+    maze,
+    input_file="6.txt",
+    excepted_output=["Win"]
+  )
+  assert output_contains(result.stdout, "Game Over")
+
+
+def test_multiple_start_position():
+  """"""
+  maze = os.path.join(TEST_INPUT_DIR,"77.txt")
+  run_test(maze , excepted_output=["Using first start position"])
+  assert "E" in result.stdout
+
+def test_uneven_maze_rows():
+  """"""
+  maze = os.path.join(TEST_MAZE_DIR, "6666.txt")
+  run_test(maze,excepted_errors=["Invalid row length"])
+
+def test_position_update():
+  """"""
+  maze = os.path.join(TEST_MAZE_DIR, "9.txt")
+  result = run_test(
+    maze,
+    input_file= "00.txt",
+    excepted_output=["Player position(1,2)"]  )
+  assert "E" not in result.stdout.replace("Congratulations","")
+
+def test_input_pocessing():
+  """"""
+  maze = os.path.join(TEST_MAZE_DIR , "7777.txt")
+  result = run_test(
+    maze,
+    input_file="6.txt",
+    excepted_output=["Win"]
+  )
+  assert result.returncode == 0
+
+
+
+
+
+def output_contains(output,*keywords):
+  return all(k.lower() in output.lower() for k in keywords)
+
 if __name__ == "__main__":
   test_oversized_maze()
   test_bound_movement()
